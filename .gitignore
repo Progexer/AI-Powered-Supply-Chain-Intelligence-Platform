@@ -1,0 +1,109 @@
+# Credentials and environment secrets
+.env
+.env.*
+!.env.example
+
+# Python runtime and builds
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# Notebook checkpoints and cache
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node / frontend builds
+node_modules/
+dist/
+dist-ssr/
+*.local
+.next/
+.vercel/
+.render/
+
+# Power BI temp files
+*.pbitmp
+*.tmp
+*.bak
+
+# --- Data Directory Rules ---
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# --- Models Directory Rules ---
+# Ignore all trained model artifacts and reports
+models/*
+!models/.gitkeep
+!models/ml_pipeline.py
+!models/model_registry.json
+models/evaluation_reports/
+models/*.joblib
+models/*.csv
+
+# --- Notebooks Directory Rules ---
+# Ignore generated charts
+notebooks/charts_eda/*
+!notebooks/charts_eda/.gitkeep
+notebooks/charts_stats/*
+!notebooks/charts_stats/.gitkeep
+
+# Ignore legacy/AI-generated files
+notebooks/phase5_charts/
+notebooks/phase6_charts/
+notebooks/phase6_verified_results.json
+notebooks/supplychainiq_phase5_business_insights.md
+notebooks/supplychainiq_phase5_eda.ipynb
+notebooks/supplychainiq_phase6_statistical_analysis.ipynb
+notebooks/run_phase6_statistical_analysis.py
+
+# --- ETL Directory Rules ---
+# Ignore legacy ETL script
+etl/supplychainiq_etl_pipeline.py
+
+# --- Legacy folders ---
+docs/
+deployment/
+scripts/

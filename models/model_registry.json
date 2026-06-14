@@ -1,0 +1,72 @@
+[
+  {
+    "model_name": "delay_predictor",
+    "model_version": "1.0",
+    "algorithm": "RandomForestClassifier",
+    "metrics": {
+      "accuracy": 0.697,
+      "precision": 0.8434,
+      "recall": 0.5495,
+      "f1_score": 0.6654,
+      "roc_auc": 0.7302
+    },
+    "artifact_path": "models/delay_predictor.joblib",
+    "target_column": "late_delivery_flag",
+    "trained_at": "2026-06-11T10:50:17+00:00",
+    "status": "active"
+  },
+  {
+    "model_name": "demand_forecaster",
+    "model_version": "1.0",
+    "algorithm": "RandomForestRegressor",
+    "metrics": {
+      "rmse": 49.7626,
+      "mae": 26.5135,
+      "r2": 0.8572,
+      "mape_pct": 23.44
+    },
+    "artifact_path": "models/demand_forecaster.joblib",
+    "target_column": "sales",
+    "trained_at": "2026-06-11T10:50:17+00:00",
+    "status": "active"
+  },
+  {
+    "model_name": "supplier_scorer",
+    "model_version": "1.0",
+    "algorithm": "WeightedCompositeScore",
+    "metrics": {
+      "suppliers_scored": 5,
+      "low_risk_count": 1,
+      "medium_risk_count": 3,
+      "high_risk_count": 1,
+      "weights": {
+        "quality": 0.3,
+        "delivery": 0.25,
+        "cost": 0.25,
+        "reliability": 0.2
+      }
+    },
+    "artifact_path": "models/supplier_scores.csv",
+    "target_column": "overall_score",
+    "trained_at": "2026-06-11T10:50:17+00:00",
+    "status": "active"
+  },
+  {
+    "model_name": "inventory_optimizer",
+    "model_version": "1.0",
+    "algorithm": "AnalyticalFormulas",
+    "metrics": {
+      "skus_analyzed": 100,
+      "at_stockout_risk": "83",
+      "stockout_risk_pct": 83.0,
+      "total_revenue_at_risk": 1319357.27,
+      "avg_safety_stock": 28.4,
+      "avg_reorder_point": 269.5,
+      "service_level": 0.95
+    },
+    "artifact_path": "models/inventory_recommendations.csv",
+    "target_column": "reorder_point",
+    "trained_at": "2026-06-11T10:50:17+00:00",
+    "status": "active"
+  }
+]

@@ -1,0 +1,177 @@
+{
+  "hypothesis_1_profit_margin_vs_late": {
+    "test": "Welch t-test",
+    "hypothesis": "Late shipments do not change profit margin",
+    "on_time_mean": 10.9532,
+    "late_mean": 10.7332,
+    "on_time_std": 41.7889,
+    "late_std": 42.2809,
+    "on_time_n": 81542,
+    "late_n": 98977,
+    "t_statistic": 1.1071,
+    "p_value": 0.268235,
+    "significant_at_005": false
+  },
+  "hypothesis_2_shipping_mode_vs_late": {
+    "test": "Chi-square test of independence + Cramer's V",
+    "hypothesis": "Shipping mode and late-delivery risk are independent",
+    "contingency_table": {
+      "0": {
+        "First Class": 1301,
+        "Same Day": 5283,
+        "Second Class": 8229,
+        "Standard Class": 66729
+      },
+      "1": {
+        "First Class": 26513,
+        "Same Day": 4454,
+        "Second Class": 26987,
+        "Standard Class": 41023
+      }
+    },
+    "chi2_statistic": 37716.0425,
+    "p_value": 0.0,
+    "degrees_of_freedom": 3,
+    "cramers_v": 0.4571,
+    "significant_at_005": true,
+    "effect_size_interpretation": "medium"
+  },
+  "hypothesis_3_defect_vs_inspection": {
+    "test": "Kruskal-Wallis H test",
+    "hypothesis": "Defect rates do not differ by inspection result",
+    "group_stats": {
+      "Pass": {
+        "n": 23,
+        "mean": 2.039,
+        "median": 1.946,
+        "std": 1.2259
+      },
+      "Fail": {
+        "n": 36,
+        "mean": 2.5693,
+        "median": 2.8514,
+        "std": 1.6011
+      },
+      "Pending": {
+        "n": 41,
+        "mean": 2.1542,
+        "median": 2.1225,
+        "std": 1.4461
+      }
+    },
+    "h_statistic": 2.1288,
+    "p_value": 0.344938,
+    "significant_at_005": false,
+    "note": "Defect rate units remain unresolved (76% of values > 1.0)."
+  },
+  "correlations": {
+    "dataset1_method": "Pearson",
+    "dataset1_highlights": {
+      "sales_vs_benefit_per_order": 0.1318,
+      "benefit_per_order_vs_profit_margin_pct": 0.8262,
+      "delivery_delay_days_vs_profit_margin_pct": -0.0034,
+      "order_item_discount_rate_vs_profit_margin_pct": -0.0231
+    },
+    "dataset1_full_matrix": {
+      "sales": {
+        "sales": 1.0,
+        "benefit_per_order": 0.1318,
+        "order_item_discount_rate": 0.0003,
+        "order_item_quantity": 0.1064,
+        "delivery_delay_days": -0.0037,
+        "profit_margin_pct": -0.0018
+      },
+      "benefit_per_order": {
+        "sales": 0.1318,
+        "benefit_per_order": 1.0,
+        "order_item_discount_rate": -0.0186,
+        "order_item_quantity": 0.0157,
+        "delivery_delay_days": -0.0054,
+        "profit_margin_pct": 0.8262
+      },
+      "order_item_discount_rate": {
+        "sales": 0.0003,
+        "benefit_per_order": -0.0186,
+        "order_item_discount_rate": 1.0,
+        "order_item_quantity": -0.0,
+        "delivery_delay_days": 0.0015,
+        "profit_margin_pct": -0.0231
+      },
+      "order_item_quantity": {
+        "sales": 0.1064,
+        "benefit_per_order": 0.0157,
+        "order_item_discount_rate": -0.0,
+        "order_item_quantity": 1.0,
+        "delivery_delay_days": 0.0018,
+        "profit_margin_pct": 0.0014
+      },
+      "delivery_delay_days": {
+        "sales": -0.0037,
+        "benefit_per_order": -0.0054,
+        "order_item_discount_rate": 0.0015,
+        "order_item_quantity": 0.0018,
+        "delivery_delay_days": 1.0,
+        "profit_margin_pct": -0.0034
+      },
+      "profit_margin_pct": {
+        "sales": -0.0018,
+        "benefit_per_order": 0.8262,
+        "order_item_discount_rate": -0.0231,
+        "order_item_quantity": 0.0014,
+        "delivery_delay_days": -0.0034,
+        "profit_margin_pct": 1.0
+      }
+    },
+    "dataset2_method": "Spearman (primary) + Pearson (secondary)",
+    "dataset2_highlights": {
+      "stock_levels_vs_products_sold_spearman": 0.0561,
+      "stock_levels_vs_products_sold_pearson": 0.0222,
+      "products_sold_vs_revenue_generated_spearman": 0.0019,
+      "products_sold_vs_revenue_generated_pearson": -0.0016,
+      "stock_levels_vs_revenue_generated_spearman": -0.1248,
+      "stock_levels_vs_revenue_generated_pearson": -0.1585
+    },
+    "dataset2_spearman_matrix": {
+      "stock_levels": {
+        "stock_levels": 1.0,
+        "products_sold": 0.0561,
+        "revenue_generated": -0.1248,
+        "shipping_cost": 0.0818,
+        "lead_time_gap_days": -0.0096
+      },
+      "products_sold": {
+        "stock_levels": 0.0561,
+        "products_sold": 1.0,
+        "revenue_generated": 0.0019,
+        "shipping_cost": 0.0499,
+        "lead_time_gap_days": -0.0356
+      },
+      "revenue_generated": {
+        "stock_levels": -0.1248,
+        "products_sold": 0.0019,
+        "revenue_generated": 1.0,
+        "shipping_cost": -0.0921,
+        "lead_time_gap_days": -0.0395
+      },
+      "shipping_cost": {
+        "stock_levels": 0.0818,
+        "products_sold": 0.0499,
+        "revenue_generated": -0.0921,
+        "shipping_cost": 1.0,
+        "lead_time_gap_days": -0.0683
+      },
+      "lead_time_gap_days": {
+        "stock_levels": -0.0096,
+        "products_sold": -0.0356,
+        "revenue_generated": -0.0395,
+        "shipping_cost": -0.0683,
+        "lead_time_gap_days": 1.0
+      }
+    }
+  },
+  "_meta": {
+    "script": "notebooks/run_statistical_analysis.py",
+    "dataset1_rows": 180519,
+    "dataset2_rows": 100
+  }
+}
