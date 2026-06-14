@@ -177,27 +177,60 @@ class DataService:
 
     def get_executive_kpis(self, user_email: str | None = None, dataset_id: str | None = None) -> dict:
         # Aggregate log metrics, inventory risks, and supplier status
-        try:
-            d1_path = _settings.data_dir / "supplychainiq_dataset1_features.csv"
-            d1 = pd.read_csv(
-                d1_path,
-                usecols=["late_delivery_flag", "sales", "benefit_per_order"],
-                low_memory=False,
-            )
-            total_orders = len(d1)
-            late_count = int(d1["late_delivery_flag"].sum())
-            on_time_rate = round((1 - late_count / total_orders) * 100, 2)
-            total_sales = round(float(d1["sales"].sum()), 2)
-            total_profit = round(float(d1["benefit_per_order"].sum()), 2)
-            avg_margin = round(total_profit / total_sales * 100, 2) if total_sales else 0
-        except Exception as e:
-            logger.info(f"Using default production dataset fallback for logistics KPIs: {e}")
-            total_orders = 180519
-            late_count = 98977
-            on_time_rate = 45.17
-            total_sales = 32493400.00
-            total_profit = 3520100.00
-            avg_margin = 10.83
+        
+        # Check if user has selected a custom shipment dataset
+        user_logistics_data = None
+        if user_email and dataset_id:
+            from backend.services.workspace_service import workspace_service
+            meta = workspace_service.get_dataset_metadata(user_email, dataset_id)
+            if meta and meta.get("dataset_type") == "shipment":
+                user_logistics_data = self._get_user_dataset_rows(user_email, dataset_id)
+
+        if user_logistics_data is not None:
+            try:
+                df = pd.DataFrame(user_logistics_data)
+                total_orders = len(df)
+                
+                # Check for columns and cast safely
+                late_col = next((c for c in df.columns if c.lower() in ("late_delivery_flag", "late_shipment", "late")), None)
+                sales_col = next((c for c in df.columns if c.lower() in ("sales", "order_item_total", "total")), None)
+                profit_col = next((c for c in df.columns if c.lower() in ("benefit_per_order", "profit", "benefit")), None)
+                
+                late_count = int(df[late_col].apply(_safe_float).sum()) if late_col else 0
+                on_time_rate = round((1 - late_count / total_orders) * 100, 2) if total_orders else 100.0
+                total_sales = round(float(df[sales_col].apply(_safe_float).sum()), 2) if sales_col else 0.0
+                total_profit = round(float(df[profit_col].apply(_safe_float).sum()), 2) if profit_col else 0.0
+                avg_margin = round(total_profit / total_sales * 100, 2) if total_sales else 0
+            except Exception as ex:
+                logger.warning(f"Error computing custom user logistics KPIs: {ex}")
+                total_orders = 0
+                late_count = 0
+                on_time_rate = 100.0
+                total_sales = 0.0
+                total_profit = 0.0
+                avg_margin = 0.0
+        else:
+            try:
+                d1_path = _settings.data_dir / "supplychainiq_dataset1_features.csv"
+                d1 = pd.read_csv(
+                    d1_path,
+                    usecols=["late_delivery_flag", "sales", "benefit_per_order"],
+                    low_memory=False,
+                )
+                total_orders = len(d1)
+                late_count = int(d1["late_delivery_flag"].sum())
+                on_time_rate = round((1 - late_count / total_orders) * 100, 2)
+                total_sales = round(float(d1["sales"].sum()), 2)
+                total_profit = round(float(d1["benefit_per_order"].sum()), 2)
+                avg_margin = round(total_profit / total_sales * 100, 2) if total_sales else 0
+            except Exception as e:
+                logger.info(f"Using default production dataset fallback for logistics KPIs: {e}")
+                total_orders = 180519
+                late_count = 98977
+                on_time_rate = 45.17
+                total_sales = 32493400.00
+                total_profit = 3520100.00
+                avg_margin = 10.83
 
         inv = self.get_inventory_recommendations(user_email=user_email, dataset_id=dataset_id)
         at_risk = sum(1 for r in inv if _safe_int(r.get("stockout_risk")) == 1)
