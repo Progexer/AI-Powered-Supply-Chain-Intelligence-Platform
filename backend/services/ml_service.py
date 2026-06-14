@@ -121,7 +121,10 @@ class MLService:
                 else:
                     row[col] = -1  # unseen category
             else:
-                row[col] = float(val) if val is not None else 0.0
+                try:
+                    row[col] = float(val) if val is not None else 0.0
+                except (ValueError, TypeError):
+                    row[col] = val
         
         X = pd.DataFrame([row], columns=feature_cols)
         proba = model.predict_proba(X)[0]
@@ -154,7 +157,10 @@ class MLService:
                 else:
                     row[col] = -1
             else:
-                row[col] = float(val) if val is not None else 0.0
+                try:
+                    row[col] = float(val) if val is not None else 0.0
+                except (ValueError, TypeError):
+                    row[col] = val
 
         X = pd.DataFrame([row], columns=feature_cols)
         pred = float(model.predict(X)[0])
