@@ -101,15 +101,5 @@ SupplyChainIQ is a full-stack, enterprise-grade decision support platform design
 ---
 
 ## 📦 Production Deployment
-
-### Option A: Docker Compose
-Build and run the entire ecosystem locally inside isolated containers:
-```bash
-docker compose up --build -d
-```
-* **Frontend:** [http://localhost:80](http://localhost:80)
-* **Backend:** [http://localhost:8000](http://localhost:8000)
-
-### Option B: Cloud Hosting
 1. **Backend (Render):** Link repository, set root folder blank, build command `pip install -r backend/requirements.txt`, start command `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`. Configure your database credentials and `CORS_ORIGINS=*` in Render Environment Variables.
 2. **Frontend (Vercel):** Link repository, set root folder to `frontend`. Add environment variable `VITE_API_URL` pointing to your Render backend instance. Vercel automatically deploys static assets with SPA routing.
